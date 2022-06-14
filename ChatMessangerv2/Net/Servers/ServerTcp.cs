@@ -24,7 +24,7 @@ namespace ChatMessangerv2.Net
         public ServerTcp()
         {
             _tcpClient = new TcpClient();
-            GetMessages();
+            //GetMessages();
         }
         public void ConnectToServer(string username)
         {
