@@ -77,10 +77,10 @@ namespace ChatMessangerv2.MVVM.ViewModel
             switch(status)
             {
                 case HttpStatusCode.OK:
-                    //var content = await result.Content.ReadAsStringAsync();
                     var users = await result.Content.ReadFromJsonAsync<IEnumerable<NetUser>>(null, CancellationToken.None);
-                    //IEnumerable<NetUser> users = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<NetUser>>(content);
-                    Users.Concat(users);
+                    List<NetUser> listUsers = users.ToList();
+                    for (int i = 0; i < listUsers.Count; i++)
+                        Users.Add(listUsers[i]);
                     break;
                 case HttpStatusCode.NoContent:
                     MessageBox.Show(
