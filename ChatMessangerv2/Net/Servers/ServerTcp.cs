@@ -43,6 +43,7 @@ namespace ChatMessangerv2.Net
             transferMessages.Message = message;
             BinaryFormatter binf = new BinaryFormatter();
             binf.Serialize(stream, transferMessages);
+            stream.Close();
         }
         public TransferMessages GetMessage()
         {
@@ -50,6 +51,7 @@ namespace ChatMessangerv2.Net
             TransferMessages transferMessages = new TransferMessages();
             BinaryFormatter binf = new BinaryFormatter();
             transferMessages = binf.Deserialize(stream) as TransferMessages;
+            stream.Close();
             return transferMessages;
         }
         private void GetMessages()
