@@ -117,7 +117,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
             if (SelectedChat.Messages != null)
             {             
                 _serverHttp = new ServerHttp();
-                var result = await _serverHttp.GetMessages(50, 0);
+                var result = await _serverHttp.GetMessages(20, 0);
                 var status = result.StatusCode;
                 switch (status)
                 {
