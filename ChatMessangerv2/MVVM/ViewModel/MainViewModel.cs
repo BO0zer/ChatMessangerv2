@@ -87,8 +87,8 @@ namespace ChatMessangerv2.MVVM.ViewModel
             switch (status)
             {
                 case HttpStatusCode.OK:
-                    var content = await result.Content.ReadAsStringAsync();
-                    var chats = (JsonConvert.DeserializeObject(content) as IEnumerable<NetChat>).ToList();
+                    var content = await result.Content.ReadFromJsonAsync<IEnumerable<NetChat>>();
+                    var chats = content.ToList();
                     foreach(var cht in chats)
                     {
                         Chat chat = new Chat() 
@@ -122,8 +122,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
                 switch (status)
                 {
                     case HttpStatusCode.OK:
-                        var content = await result.Content.ReadAsStringAsync();
-                        var messages = JsonConvert.DeserializeObject(content) as IEnumerable<NetMessage>;
+                        var messages = await result.Content.ReadFromJsonAsync<IEnumerable<NetMessage>>();
                         foreach (var msg in messages)
                         {
                             Messages.Add(msg);
