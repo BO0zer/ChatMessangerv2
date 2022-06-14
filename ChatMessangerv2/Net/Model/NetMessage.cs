@@ -15,7 +15,7 @@ namespace ChatMessangerv2.Net.Model
         /// <summary>
         /// ID отправителя
         /// </summary>
-        public NetUser UserSender { get; set; }
+        public NetUser Sender { get; set; }
         /// <summary>
         /// Просмотрено
         /// </summary>
