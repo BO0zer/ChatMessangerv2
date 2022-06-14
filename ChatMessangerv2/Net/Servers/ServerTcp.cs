@@ -17,16 +17,17 @@ namespace ChatMessangerv2.Net
     {
         TcpClient _tcpClient;
         private const string _ip = "127.0.0.1";
-        private const int _port = 7891;
+        private const int _port = 40000;
         public event Action msgRecievedEvent;
         public event Action msgUpdateEvent;
         public event Action msgDeleteEvent;
         public ServerTcp()
         {
             _tcpClient = new TcpClient();
-            //GetMessages();
+            this.ConnectToServer();
+            GetMessages();
         }
-        public void ConnectToServer(string username)
+        public void ConnectToServer()
         {
             if (!_tcpClient.Connected)
             {
