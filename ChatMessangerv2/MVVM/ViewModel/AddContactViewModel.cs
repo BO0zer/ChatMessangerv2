@@ -54,13 +54,9 @@ namespace ChatMessangerv2.MVVM.ViewModel
             //chat.AllValueChanged();
             //UserMain = userMain;
             Users = new ObservableCollection<NetUser>();
-            AddContactToContacts = new RelayCommand(AddContact1);
+            AddContactToContacts = new RelayCommand( o=> AddContact(o));
             SearchUserToServer = new RelayCommand(o => SearchUser());
             Load = new RelayCommand(o => LoadMore());
-        }
-        public void AddContact1(object parameter)
-        {
-           AddContact(parameter);
         }
         public async Task AddContact(object parameter)
         {

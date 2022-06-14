@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -53,9 +54,7 @@ namespace ChatMessangerv2.Net
         {
             _httpClient.DefaultRequestHeaders.Add("Token", StartViewModel.Token);
             var url = $"Chat";
-            var json = JsonConvert.SerializeObject(chat);
-            var data = new StringContent(json, Encoding.UTF8, "api/json");
-            return await _httpClient.PutAsync(url, data);
+            return await _httpClient.PutAsJsonAsync(url, chat);
         }
         public async Task<HttpResponseMessage> NewPassword(NetUser user, string password)
         {
