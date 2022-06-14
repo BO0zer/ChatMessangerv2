@@ -34,7 +34,7 @@ namespace ChatMessangerv2.Net
         public async Task<HttpResponseMessage> SearchUser(string login, int offset, int portion)
         {
             _httpClient.DefaultRequestHeaders.Add("Token", StartViewModel.Token);
-            var url = $"api/{login}/{offset}/{portion}";
+            var url = $"User/{login}/{portion}/{offset}";
             return await _httpClient.GetAsync(url);
         }
         public async Task<HttpResponseMessage> GetChats(int offset, int portion)

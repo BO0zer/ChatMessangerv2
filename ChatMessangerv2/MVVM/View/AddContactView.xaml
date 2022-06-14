@@ -29,7 +29,8 @@
             </Button>
             <Button
                 Margin="10,5,5,5"
-                Content="Загрузить еще">
+                Content="Загрузить еще"
+                Command="">
                 
             </Button>
         </DockPanel>
