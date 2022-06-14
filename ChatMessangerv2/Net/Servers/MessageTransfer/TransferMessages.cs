@@ -21,6 +21,7 @@ namespace ChatMessangerv2.Net.Servers.MessageTransfer
     /// <summary>
     /// Вариации действий
     /// </summary>
+    [Serializable]
     public enum ACTION
     {
         SEND,
