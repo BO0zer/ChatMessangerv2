@@ -63,9 +63,9 @@ namespace ChatMessangerv2.MVVM.ViewModel
             if (SelectedUser != null)
             {
                 await AddChat();
-                (parameter as Window).DialogResult = true;
+                if(Chat.CommonChat!=null)
+                    (parameter as Window).DialogResult = true;
             }
-            else (parameter as Window).DialogResult = false;
 
         }
 
