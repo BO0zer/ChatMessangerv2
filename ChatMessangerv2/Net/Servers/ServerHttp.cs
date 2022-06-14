@@ -44,10 +44,10 @@ namespace ChatMessangerv2.Net
             var url = $"Chat/{portion}/{offset}";
             return await _httpClient.GetAsync(url);
         }
-        public async Task<HttpResponseMessage> GetMessages(int portion, int offset)
+        public async Task<HttpResponseMessage> GetMessages(Guid id, int portion, int offset)
         {
             _httpClient.DefaultRequestHeaders.Add("Token", StartViewModel.Token);
-            var url = $"Message/{portion}/{offset}";
+            var url = $"Message/{id}/{portion}/{offset}";
             return await _httpClient.GetAsync(url);
         }
         public async Task<HttpResponseMessage> CreateChat(NetChat chat)
