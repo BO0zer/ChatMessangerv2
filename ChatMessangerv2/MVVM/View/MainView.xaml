@@ -1,0 +1,85 @@
+﻿<Window x:Class="ChatMessangerv2.MVVM.View.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChatMessangerv2.MVVM.View"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d"
+        Title="Привет" Height="475" Width="800">
+    <!--DataContext="{Binding MainViewModel, Mode=OneWay, Source={StaticResource Locator}}">-->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <DockPanel>
+            <TextBlock Height="25"
+                       DockPanel.Dock="Top"/>
+            <Button Height="25"
+                    DockPanel.Dock="Top"
+                    Content="Add contact"
+                    Command="{Binding AddContact}"/>
+            <ListBox ItemsSource="{Binding Chats}"
+                     SelectedItem="{Binding SelectedChat}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding GetMessagesForSelectedChat}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock FontSize="16" Text="{Binding Path=UserContact.Login}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </DataTemplate>
+ 
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+        <StackPanel Grid.Column="1">
+            <Menu Height="25" VerticalAlignment="Top" HorizontalAlignment="Right">
+                <MenuItem Header="Профиль">
+                    <Button Content="Изменить логин"/>
+                    <Button Content="Изменить пароль"/>
+                    <Button Content="Выйти из аккаунта"/>
+                </MenuItem>
+
+            </Menu>
+            <ListBox Height="380"
+                      ItemsSource="{Binding Messages}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <DockPanel>
+                                <TextBlock FontSize="12" Text="Отправлено: "/>
+                                <TextBlock FontSize="12" Text="{Binding Path=User.Login}" Width="150"/>
+                                <TextBlock FontSize="12" Text="{Binding Path=Text}" Width="250" Margin="10,0,0,0"/>
+                                <Button Width="30"
+                                        Content="D"
+                                        Command="{Binding UpdateMessage}"/>
+                                <Button Width="30"
+                                        Content="U"
+                                        Command="{Binding DeleteMessage}"/>
+                            </DockPanel>
+
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <StackPanel Orientation="Horizontal">
+                <TextBox Height="55"
+                         Width="495"
+                         VerticalContentAlignment="Center"
+                         Text="{Binding Message.Text, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <Button Width="55"
+                        Content="Send"
+                        Command="{Binding SendMessage}"/>
+                <Button Width="55"
+                        Content="Attach"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

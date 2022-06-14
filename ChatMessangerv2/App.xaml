@@ -1,0 +1,11 @@
+﻿<Application x:Class="ChatMessangerv2.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ChatMessangerv2" xmlns:local1="clr-namespace:ChatMessangerv2.MVVM.ViewModel"
+             StartupUri="./MVVM/View/StartView.xaml"
+             >
+    <Application.Resources>
+         <local1:Locator x:Key="Locator"/>
+        <local:StartView x:Key="LocatorStartView"/>
+    </Application.Resources>
+</Application>

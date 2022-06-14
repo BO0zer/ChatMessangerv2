@@ -1,0 +1,45 @@
+﻿<Window x:Class="ChatMessangerv2.StartView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChatMessangerv2" xmlns:w="clr-namespace:ChatMessangerv2.Core"
+        mc:Ignorable="d"
+        DataContext="{Binding StartViewModel, Mode=OneWay, Source={StaticResource Locator}}"
+        Title="MainWindow" Height="190" Width="450">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="1">
+            <Label Content="Логин" Margin="20,0,0,0" Width="60"/>
+            <TextBox Text="{Binding LoginText}" TextWrapping="Wrap" Width="250" HorizontalAlignment="Right" Margin="0,0,20,0" VerticalAlignment="Center"/>
+
+        </DockPanel>
+        <DockPanel Grid.Row="2">
+            <Label Content="Пароль" Margin="20,0,0,0" Width="60" />
+            <TextBox Text="{Binding PasswordText}" TextWrapping="Wrap" Width="250" HorizontalAlignment="Right" Margin="0,0,20,0" VerticalAlignment="Center"/>
+        </DockPanel>
+        <DockPanel Grid.Row="3">
+            <Button
+                Margin="20,0,0,0"
+                Content="Авторизоваться"
+                HorizontalAlignment="Left"
+                Command="{Binding AuthoriseToServer}">
+                
+            </Button>
+            <Button
+                Margin="0,0,20,0"
+                Content="Зарегистрироваться"
+                HorizontalAlignment="Right"
+                Command="{Binding RegisterToServer}">
+                
+            </Button>
+        </DockPanel>
+        
+    </Grid>
+</Window>
