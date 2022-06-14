@@ -81,7 +81,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
         public async void GetChats()
         {
             _serverHttp = new ServerHttp();
-            var result =  await _serverHttp.GetChats(0, 100);
+            var result =  await _serverHttp.GetChats(0, 10);
             var status = result.StatusCode;
             switch (status)
             {
