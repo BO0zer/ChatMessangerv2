@@ -96,7 +96,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
                             Id = cht.Id,
                             CreationTimeLocal = cht.CreationTimeLocal,
                             UserMain = User.YouUser,
-                            UserContact = new NetUser() { Login = cht.ChatMembers.Where(o=>o.Login != User.YouUser.Login).ToList()[0].Login, Id = cht.ChatMembers.Where(o => o.Login != User.YouUser.Login).ToList()[0].Id},
+                            UserContact = cht.ChatMembers.First(o=>o.Id != User.YouUser.Id),
                             Messages = new ObservableCollection<NetMessage>()   
                         };
                         Chats.Add(chat);
@@ -126,7 +126,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
                         foreach (var msg in messages)
                         {
                             Messages.Add(msg);
-                            Chats.Where(o => o.Id.ToString() == SelectedChat.Id.ToString()).ToList()[0].Messages.Add(msg);
+                            Chats.Where(o => o.Id.ToString() == SelectedChat.Id.ToString()).First().Messages.Add(msg);
                         }
                         break;
                     case HttpStatusCode.BadRequest:
