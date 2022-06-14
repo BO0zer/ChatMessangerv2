@@ -8,5 +8,6 @@ namespace ChatMessangerv2.MVVM.ViewModel
 {
     public class ChangeLoginViewModel
     {
+
     }
 }

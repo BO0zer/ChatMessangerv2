@@ -49,5 +49,29 @@ namespace ChatMessangerv2.Net
             var url = $"Message/{portion}/{offset}";
             return await _httpClient.GetAsync(url);
         }
+        public async Task<HttpResponseMessage> CreateChat(NetChat chat)
+        {
+            _httpClient.DefaultRequestHeaders.Add("Token", StartViewModel.Token);
+            var url = $"Chat";
+            var json = JsonConvert.SerializeObject(chat);
+            var data = new StringContent(json, Encoding.UTF8, "api/json");
+            return await _httpClient.PutAsync(url, data);
+        }
+        public async Task<HttpResponseMessage> NewPassword(NetUser user, string password)
+        {
+            _httpClient.DefaultRequestHeaders.Add("Token", StartViewModel.Token);
+            var url = $"User/{password}";
+            var json = JsonConvert.SerializeObject(user);
+            var data = new StringContent(json, Encoding.UTF8, "api/json");
+            return await _httpClient.PutAsync(url, data);
+        }
+        public async Task<HttpResponseMessage> NewLogin(NetUser user, string login)
+        {
+            _httpClient.DefaultRequestHeaders.Add("Token", StartViewModel.Token);
+            var url = $"User/{login}";
+            var json = JsonConvert.SerializeObject(user);
+            var data = new StringContent(json, Encoding.UTF8, "api/json");
+            return await _httpClient.PutAsync(url, data);
+        }
     }
 }

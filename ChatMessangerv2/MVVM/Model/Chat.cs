@@ -12,8 +12,8 @@ namespace ChatMessangerv2.MVVM.Model
     {
         public Guid Id { get; set; }
         public DateTime CreationTimeLocal { get; set; }
-        public  User UserMain { get; set; }
-        public  User UserContact { get; set; }
+        public  NetUser UserMain { get; set; }
+        public  NetUser UserContact { get; set; }
         public ObservableCollection<NetMessage> Messages { get; set; }
         public static Chat CommonChat { get; set; }
     }

@@ -94,8 +94,8 @@ namespace ChatMessangerv2.MVVM.ViewModel
                         {
                             Id = cht.Id,
                             CreationTimeLocal = cht.CreationTimeLocal,
-                            UserMain = new User() { Login = User.YouUser.Login, Password = User.YouUser.Password},
-                            UserContact = new User() { Login = cht.ChatMembers.Where(o=>o.Login != User.YouUser.Login).ToList()[0].Login},
+                            UserMain = User.YouUser,
+                            UserContact = new NetUser() { Login = cht.ChatMembers.Where(o=>o.Login != User.YouUser.Login).ToList()[0].Login, Id = cht.ChatMembers.Where(o => o.Login != User.YouUser.Login).ToList()[0].Id},
                             Messages = new ObservableCollection<NetMessage>()   
                         };
                         Chats.Add(chat);

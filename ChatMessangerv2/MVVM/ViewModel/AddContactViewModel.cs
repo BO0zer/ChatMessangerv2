@@ -62,7 +62,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
         {
             if (SelectedUser != null)
             {
-                Chat.CommonChat = new Chat() { CreationTimeLocal = DateTime.Now,  UserContact = new User() { Login = SelectedUser.Login} };
+                AddChat();
                 (parameter as Window).DialogResult = true;
             }
             else (parameter as Window).DialogResult = false;
@@ -101,6 +101,31 @@ namespace ChatMessangerv2.MVVM.ViewModel
         {
             Offset += _propotion;
             SearchUser();
+        }
+        public async Task AddChat()
+        {
+            _server = new ServerHttp();
+            var result = await _server.CreateChat(new NetChat() { CreationTimeLocal = DateTime.Now,  ChatMembers = new List<NetUser>() 
+            {
+                User.YouUser,
+                SelectedUser
+            } });
+            var status = result.StatusCode;
+            switch (status)
+            {
+                case HttpStatusCode.OK:
+                    var chat = await result.Content.ReadFromJsonAsync<NetChat>(null, CancellationToken.None);
+                    Chat.CommonChat = new Chat() { CreationTimeLocal = DateTime.Now, UserContact = SelectedUser, Id = chat.Id, UserMain = User.YouUser };
+                    break;
+                case HttpStatusCode.BadRequest:
+                    var error = await result.Content.ReadFromJsonAsync<ProblemDetails>(null, CancellationToken.None);
+                    MessageBox.Show(error.Detail);
+                    break;
+                case HttpStatusCode.InternalServerError:
+                    MessageBox.Show(
+                        "Сервер не отвечает");
+                    break;
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChatMessangerv2.Net.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,6 @@ namespace ChatMessangerv2.MVVM.Model
         /// Пароль пользователя
         /// </summary>
         public string Password { get; set; }
-        public static User YouUser { get; set; }
+        public static NetUser YouUser { get; set; }
     }
 }

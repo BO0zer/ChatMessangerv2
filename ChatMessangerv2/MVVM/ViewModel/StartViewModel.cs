@@ -72,9 +72,8 @@ namespace ChatMessangerv2.MVVM.ViewModel
                 case HttpStatusCode.OK:
                     Token = result.Headers.GetValues("Token").First();
                     MainView mv = new MainView();
-                    User.YouUser = new User();
-                    User.YouUser.Login = LoginText;
-                    User.YouUser.Password = PasswordText;
+                    var user = await result.Content.ReadFromJsonAsync<NetUser>(null, CancellationToken.None);
+                    User.YouUser = user;
                     MainViewModel = new MainViewModel();
                     mv.DataContext = MainViewModel;
                     mv.Show();
