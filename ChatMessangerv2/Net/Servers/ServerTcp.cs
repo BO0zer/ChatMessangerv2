@@ -41,9 +41,8 @@ namespace ChatMessangerv2.Net
             transferMessages.SetToken(StartViewModel.Token);
             transferMessages.action = act;
             transferMessages.Message = message;
-            var json = JsonConvert.SerializeObject(transferMessages);
             BinaryFormatter binf = new BinaryFormatter();
-            binf.Serialize(stream, json);
+            binf.Serialize(stream, transferMessages);
         }
         public TransferMessages GetMessage()
         {
