@@ -54,20 +54,25 @@ namespace ChatMessangerv2.MVVM.ViewModel
             //chat.AllValueChanged();
             //UserMain = userMain;
             Users = new ObservableCollection<NetUser>();
-            AddContactToContacts = new RelayCommand(AddContact);
+            AddContactToContacts = new RelayCommand(AddContact1);
             SearchUserToServer = new RelayCommand(o => SearchUser());
             Load = new RelayCommand(o => LoadMore());
         }
-        public void AddContact(object parameter)
+        public void AddContact1(object parameter)
+        {
+           AddContact(parameter);
+        }
+        public async Task AddContact(object parameter)
         {
             if (SelectedUser != null)
             {
-                AddChat();
+                await AddChat();
                 (parameter as Window).DialogResult = true;
             }
             else (parameter as Window).DialogResult = false;
 
         }
+
         public async Task SearchUser()
         {
             Users.Clear();
@@ -102,22 +107,22 @@ namespace ChatMessangerv2.MVVM.ViewModel
             Offset += _propotion;
             SearchUser();
         }
-        public void AddChat()
+        public async Task AddChat()
         {
             _server = new ServerHttp();
-            var result = _server.CreateChat(new NetChat() { CreationTimeLocal = DateTime.Now,  ChatMembers = new List<NetUser>() 
+            var result = await _server.CreateChat(new NetChat() { CreationTimeLocal = DateTime.Now,  ChatMembers = new List<NetUser>() 
             {
                 SelectedUser
-            } }).Result;
+            } });
             var status = result.StatusCode;
             switch (status)
             {
                 case HttpStatusCode.OK:
-                    var chat =  result.Content.ReadFromJsonAsync<NetChat>(null, CancellationToken.None).Result;
+                    var chat = await result.Content.ReadFromJsonAsync<NetChat>(null, CancellationToken.None);
                     Chat.CommonChat = new Chat() { CreationTimeLocal = DateTime.Now, UserContact = SelectedUser, Id = chat.Id, UserMain = User.YouUser };
                     break;
                 case HttpStatusCode.BadRequest:
-                    var error =  result.Content.ReadFromJsonAsync<ProblemDetails>(null, CancellationToken.None).Result;
+                    var error =  await result.Content.ReadFromJsonAsync<ProblemDetails>(null, CancellationToken.None);
                     MessageBox.Show(error.Detail);
                     break;
                 case HttpStatusCode.InternalServerError:
