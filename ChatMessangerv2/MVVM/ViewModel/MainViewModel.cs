@@ -45,7 +45,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
             Messages = new ObservableCollection<NetMessage>();
             Chats = new ObservableCollection<Chat>();
             _serverTcp = new ServerTcp();
-            _serverTcp.msgRecievedEvent += MessageRecieved;
+            //_serverTcp.msgRecievedEvent += MessageRecieved;
 
             GetChats();
 
@@ -140,6 +140,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
         }
         public void SendMessageToChat()
         {
+            _serverTcp.ConnectToServer();
             _serverTcp.SendMessage(Message, Net.Servers.MessageTransfer.ACTION.SEND);
         }
     }
