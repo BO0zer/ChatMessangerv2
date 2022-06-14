@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace ChatMessangerv2.Net.Servers.MessageTransfer
 {
+    [Serializable]
     public abstract class Transfer
     {
         public string Token { get; private set; }

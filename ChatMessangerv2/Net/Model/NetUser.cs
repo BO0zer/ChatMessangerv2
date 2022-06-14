@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChatMessangerv2.Net.Model
 {
+    [Serializable]
     public class NetUser
     {
         /// <summary>
