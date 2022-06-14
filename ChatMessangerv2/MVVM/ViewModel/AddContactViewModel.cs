@@ -77,8 +77,9 @@ namespace ChatMessangerv2.MVVM.ViewModel
             switch(status)
             {
                 case HttpStatusCode.OK:
-                    var content = await result.Content.ReadAsStringAsync();
-                    IEnumerable<NetUser> users = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<NetUser>>(content);
+                    //var content = await result.Content.ReadAsStringAsync();
+                    var users = await result.Content.ReadFromJsonAsync<IEnumerable<NetUser>>(null, CancellationToken.None);
+                    //IEnumerable<NetUser> users = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<NetUser>>(content);
                     Users.Concat(users);
                     break;
                 case HttpStatusCode.NoContent:
@@ -89,6 +90,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
                     var error = await result.Content.ReadFromJsonAsync<ProblemDetails>(null, CancellationToken.None);
                     MessageBox.Show(error.Detail);
                     break;
+
                 case HttpStatusCode.InternalServerError:
                     MessageBox.Show(
                         "Сервер не отвечает");
