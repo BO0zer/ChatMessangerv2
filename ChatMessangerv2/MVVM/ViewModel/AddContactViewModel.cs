@@ -14,6 +14,8 @@ using System.Windows;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net.Http.Json;
+using System.Threading;
 
 namespace ChatMessangerv2.MVVM.ViewModel
 {
@@ -84,8 +86,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
                         "Пользователи с данным логином не найдены");
                     break;
                 case HttpStatusCode.BadRequest:
-                    content = await result.Content.ReadAsStringAsync();
-                    var error = JsonConvert.DeserializeObject(content) as ProblemDetails;
+                    var error = await result.Content.ReadFromJsonAsync<ProblemDetails>(null, CancellationToken.None);
                     MessageBox.Show(error.Detail);
                     break;
                 case HttpStatusCode.InternalServerError:
