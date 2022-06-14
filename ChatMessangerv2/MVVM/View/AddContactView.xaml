@@ -25,7 +25,8 @@
             </TextBox>
             <Button
                 Content="Поиск"
-                Margin="10,5,0,5">
+                Margin="10,5,0,5"
+                Command="{Binding SearchUserToServer}">
             </Button>
             <Button
                 Margin="10,5,5,5"

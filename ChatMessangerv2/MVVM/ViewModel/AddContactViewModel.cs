@@ -54,13 +54,6 @@ namespace ChatMessangerv2.MVVM.ViewModel
             AddContactToContacts = new RelayCommand(AddContact);
             SearchUserToServer = new RelayCommand(o => SearchUser());
             Load = new RelayCommand(o => LoadMore());
-            Users = new ObservableCollection<NetUser>()
-            {
-                new NetUser() { Login = "Vasya123", Password="gg"},
-                new NetUser() { Login = "Vasya12", Password="gg"},
-                new NetUser() { Login = "Vasya1", Password="gg"},
-            };
-
         }
         public void AddContact(object parameter)
         {

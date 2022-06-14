@@ -33,33 +33,10 @@ namespace ChatMessangerv2.MVVM.ViewModel
         private ServerHttp _server;
         public StartViewModel()
         {
-            //this.user = user;
-            //user.ValueChanged += ModelValueChanged;
-            //user.AllValueChanged();
 
             RegisterToServer = new RelayCommand(o => Register());
             AuthoriseToServer = new RelayCommand(o => Authorise());
         }
-        //private void ModelValueChanged(object sender, string valueName, object oldValue, object newValue)
-        //{
-        //    switch (valueName)
-        //    {
-        //        case nameof(UserAuth.Login): Login = (string)newValue; break;
-        //        case nameof(UserAuth.Password): Password = (string)newValue; break;
-        //    }
-        //}
-
-        //protected override void PropertyNewValue<T>(ref T fieldProperty, T newValue, string propertyName)
-        //{
-        //    base.PropertyNewValue(ref fieldProperty, newValue, propertyName);
-
-        //    switch (propertyName)
-        //    {
-        //        case nameof(Login): user.SendValue(nameof(UserAuth.Login), Login); break;
-        //        case nameof(Password): user.SendValue(nameof(UserAuth.Password), Password); break;
-        //    }
-
-        //}
         public async Task Register()
         {
             _server = new ServerHttp();
@@ -72,14 +49,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
                         "Уведомление",
                         MessageBoxButton.OK,
                         MessageBoxImage.Information);
-                    Token = result.Headers.GetValues("Token").First();
-                    MainView mv = new MainView();
-                    User.YouUser = new User();
-                    User.YouUser.Login = LoginText;
-                    User.YouUser.Password = PasswordText;
-                    MainViewModel = new MainViewModel();
-                    mv.DataContext = MainViewModel;
-                    mv.Show();
+                    Authorise();
                     break;
                 case HttpStatusCode.BadRequest:
                     var content = await result.Content.ReadAsStringAsync();
