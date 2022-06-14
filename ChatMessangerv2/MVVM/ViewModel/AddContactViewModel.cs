@@ -102,23 +102,22 @@ namespace ChatMessangerv2.MVVM.ViewModel
             Offset += _propotion;
             SearchUser();
         }
-        public async Task AddChat()
+        public void AddChat()
         {
             _server = new ServerHttp();
-            var result = await _server.CreateChat(new NetChat() { CreationTimeLocal = DateTime.Now,  ChatMembers = new List<NetUser>() 
+            var result = _server.CreateChat(new NetChat() { CreationTimeLocal = DateTime.Now,  ChatMembers = new List<NetUser>() 
             {
-                User.YouUser,
                 SelectedUser
-            } });
+            } }).Result;
             var status = result.StatusCode;
             switch (status)
             {
                 case HttpStatusCode.OK:
-                    var chat = await result.Content.ReadFromJsonAsync<NetChat>(null, CancellationToken.None);
+                    var chat =  result.Content.ReadFromJsonAsync<NetChat>(null, CancellationToken.None).Result;
                     Chat.CommonChat = new Chat() { CreationTimeLocal = DateTime.Now, UserContact = SelectedUser, Id = chat.Id, UserMain = User.YouUser };
                     break;
                 case HttpStatusCode.BadRequest:
-                    var error = await result.Content.ReadFromJsonAsync<ProblemDetails>(null, CancellationToken.None);
+                    var error =  result.Content.ReadFromJsonAsync<ProblemDetails>(null, CancellationToken.None).Result;
                     MessageBox.Show(error.Detail);
                     break;
                 case HttpStatusCode.InternalServerError:
