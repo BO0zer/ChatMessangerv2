@@ -42,6 +42,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
 
         public MainViewModel()
         {
+            Message = new NetMessage();
             Messages = new ObservableCollection<NetMessage>();
             Chats = new ObservableCollection<Chat>();
             _serverTcp = new ServerTcp();
