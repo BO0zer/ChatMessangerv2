@@ -37,7 +37,6 @@ namespace ChatMessangerv2.MVVM.ViewModel
 
         private ServerTcp _serverTcp;
         private ServerHttp _serverHttp;
-        //Лист контактов
 
 
         public MainViewModel()
@@ -117,7 +116,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
             if (SelectedChat.Messages != null)
             {             
                 _serverHttp = new ServerHttp();
-                var result = await _serverHttp.GetMessages(SelectedChat.Id,20, 0);
+                var result = await _serverHttp.GetMessages(SelectedChat.Id, 20, 0);
                 var status = result.StatusCode;
                 switch (status)
                 {
