@@ -82,7 +82,8 @@ namespace ChatMessangerv2.MVVM.ViewModel
                     mv.Show();
                     break;
                 case HttpStatusCode.BadRequest:
-                    var error = JsonConvert.DeserializeObject(result.Content.ReadAsStringAsync().Result) as ProblemDetails;
+                    var content = await result.Content.ReadAsStringAsync();
+                    var error = JsonConvert.DeserializeObject(content) as ProblemDetails;
                     MessageBox.Show(error.Detail);
                     break;
                 case HttpStatusCode.InternalServerError:
@@ -108,7 +109,8 @@ namespace ChatMessangerv2.MVVM.ViewModel
                     mv.Show();
                     break;
                 case HttpStatusCode.BadRequest:
-                    var error = JsonConvert.DeserializeObject(result.Content.ReadAsStringAsync().Result) as ProblemDetails;
+                    var content = await result.Content.ReadAsStringAsync();
+                    var error = JsonConvert.DeserializeObject(content) as ProblemDetails;
                     MessageBox.Show(error.Detail);
                     break;
                 case HttpStatusCode.InternalServerError:

@@ -37,16 +37,16 @@ namespace ChatMessangerv2.Net
             var url = $"api/{login}/{offset}/{portion}";
             return await _httpClient.GetAsync(url);
         }
-        public async Task<HttpResponseMessage> GetChats(NetUser user, int offset, int portion)
+        public async Task<HttpResponseMessage> GetChats(int offset, int portion)
         {
             _httpClient.DefaultRequestHeaders.Add("Token", StartViewModel.Token);
-            var url = $"api/{user}/{offset}/{portion}";
+            var url = $"Chat/{portion}/{offset}";
             return await _httpClient.GetAsync(url);
         }
-        public async Task<HttpResponseMessage> GetMessages(NetChat chat, int number, int offset)
+        public async Task<HttpResponseMessage> GetMessages(int portion, int offset)
         {
             _httpClient.DefaultRequestHeaders.Add("Token", StartViewModel.Token);
-            var url = $"api/{chat}/{number}/{offset}";
+            var url = $"Message/{portion}/{offset}";
             return await _httpClient.GetAsync(url);
         }
     }
