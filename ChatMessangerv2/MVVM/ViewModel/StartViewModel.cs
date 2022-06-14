@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Net;
 
 namespace ChatMessangerv2.MVVM.ViewModel
 {
@@ -59,45 +60,18 @@ namespace ChatMessangerv2.MVVM.ViewModel
         //    }
 
         //}
-        public void Register()
+        public async Task Register()
         {
             _server = new ServerHttp();
-            var result = _server.Register(new NetUser() { Login = LoginText, Password = PasswordText}).Result;
-            var status = result.StatusCode.ToString();
-            //var status = "200";
+            var result = await _server.Register(new NetUser() { Login = LoginText, Password = PasswordText});
+            var status = result.StatusCode;
             switch(status)
             {
-                case "200":
+                case HttpStatusCode.OK:
                     MessageBox.Show("Вы успешно зарегистрировались",
                         "Уведомление",
                         MessageBoxButton.OK,
                         MessageBoxImage.Information);
-                    //Token = result.Headers.GetValues("Token").First();
-                    MainView mv = new MainView();
-                    User.YouUser = new User();
-                    User.YouUser.Login = LoginText;
-                    User.YouUser.Password = PasswordText;
-                    MainViewModel = new MainViewModel();
-                    mv.DataContext = MainViewModel;
-                    mv.Show();
-                    break;
-                case "400":
-                    //var error = JsonConvert.DeserializeObject(result.Content.ReadAsStringAsync().Result) as ProblemDetails;
-                    //MessageBox.Show(error.Detail);
-                    break;
-                case "500":
-                    MessageBox.Show("Сервер не отвечает");
-                    break;
-            }
-        }
-        public void Authorise()
-        {
-            _server = new ServerHttp();
-            var result = _server.Authorise(new NetUser() { Login = LoginText, Password = PasswordText}).Result;
-            var status = result.StatusCode.ToString();
-            switch (status)
-            {
-                case "200":
                     Token = result.Headers.GetValues("Token").First();
                     MainView mv = new MainView();
                     User.YouUser = new User();
@@ -107,11 +81,37 @@ namespace ChatMessangerv2.MVVM.ViewModel
                     mv.DataContext = MainViewModel;
                     mv.Show();
                     break;
-                case "400":
-                    //var error = JsonConvert.DeserializeObject(result.Content.ReadAsStringAsync().Result) as ProblemDetails;
-                    //MessageBox.Show(error.Detail);
+                case HttpStatusCode.BadRequest:
+                    var error = JsonConvert.DeserializeObject(result.Content.ReadAsStringAsync().Result) as ProblemDetails;
+                    MessageBox.Show(error.Detail);
                     break;
-                case "500":
+                case HttpStatusCode.InternalServerError:
+                    MessageBox.Show("Сервер не отвечает");
+                    break;
+            }
+        }
+        public async Task Authorise()
+        {
+            _server = new ServerHttp();
+            var result = await _server.Authorise(new NetUser() { Login = LoginText, Password = PasswordText});
+            var status = result.StatusCode;
+            switch (status)
+            {
+                case HttpStatusCode.OK:
+                    Token = result.Headers.GetValues("Token").First();
+                    MainView mv = new MainView();
+                    User.YouUser = new User();
+                    User.YouUser.Login = LoginText;
+                    User.YouUser.Password = PasswordText;
+                    MainViewModel = new MainViewModel();
+                    mv.DataContext = MainViewModel;
+                    mv.Show();
+                    break;
+                case HttpStatusCode.BadRequest:
+                    var error = JsonConvert.DeserializeObject(result.Content.ReadAsStringAsync().Result) as ProblemDetails;
+                    MessageBox.Show(error.Detail);
+                    break;
+                case HttpStatusCode.InternalServerError:
                     MessageBox.Show("Сервер не отвечает");
                     break;
             }
