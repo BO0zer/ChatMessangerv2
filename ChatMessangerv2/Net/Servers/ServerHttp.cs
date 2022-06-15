@@ -60,17 +60,19 @@ namespace ChatMessangerv2.Net
         {
             _httpClient.DefaultRequestHeaders.Add("Token", StartViewModel.Token);
             var url = $"User/{password}";
-            var json = JsonConvert.SerializeObject(user);
-            var data = new StringContent(json, Encoding.UTF8, "api/json");
-            return await _httpClient.PutAsync(url, data);
+            return await _httpClient.PutAsJsonAsync(url, user);
         }
         public async Task<HttpResponseMessage> NewLogin(NetUser user, string login)
         {
             _httpClient.DefaultRequestHeaders.Add("Token", StartViewModel.Token);
             var url = $"User/{login}";
-            var json = JsonConvert.SerializeObject(user);
-            var data = new StringContent(json, Encoding.UTF8, "api/json");
-            return await _httpClient.PutAsync(url, data);
+            return await _httpClient.PutAsJsonAsync(url, user);
+        }
+        public async Task<HttpResponseMessage> DeleteChat(Guid id)
+        {
+            _httpClient.DefaultRequestHeaders.Add("Token", StartViewModel.Token);
+            var url = $"Chat/{id}";
+            return await _httpClient.DeleteAsync(url);
         }
     }
 }

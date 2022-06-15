@@ -16,12 +16,12 @@
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="1">
             <Label Content="Старый пароль" Margin="20,0,0,0" Width="150"/>
-            <TextBox Text="{Binding LoginText}" TextWrapping="Wrap" Width="250" HorizontalAlignment="Right" Margin="0,0,20,0" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding OldPassword}" TextWrapping="Wrap" Width="250" HorizontalAlignment="Right" Margin="0,0,20,0" VerticalAlignment="Center"/>
 
         </DockPanel>
         <DockPanel Grid.Row="2">
             <Label Content="Новый логин" Margin="20,0,0,0" Width="150" />
-            <TextBox Text="{Binding PasswordText}" TextWrapping="Wrap" Width="250" HorizontalAlignment="Right" Margin="0,0,20,0" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding NewLogin}" TextWrapping="Wrap" Width="250" HorizontalAlignment="Right" Margin="0,0,20,0" VerticalAlignment="Center"/>
         </DockPanel>
         <DockPanel Grid.Row="3">
             <Button
@@ -29,7 +29,8 @@
                 Width="100"
                 Content="Назад"
                 HorizontalAlignment="Left"
-                Command="{Binding AuthoriseToServer}">
+                Command="{Binding GetBack}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}">
 
             </Button>
             <Button
@@ -37,7 +38,7 @@
                 Margin="0,0,20,0"
                 Content="Изменить"
                 HorizontalAlignment="Right"
-                Command="{Binding RegisterToServer}">
+                Command="{Binding ChangeLogin}">
 
             </Button>
         </DockPanel>

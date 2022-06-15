@@ -36,10 +36,10 @@ namespace ChatMessangerv2.MVVM.ViewModel
         public StartViewModel()
         {
 
-            RegisterToServer = new RelayCommand(o => Register());
-            AuthoriseToServer = new RelayCommand(o => Authorise());
+            RegisterToServer = new RelayCommand(o => Register(o));
+            AuthoriseToServer = new RelayCommand(o => Authorise(o));
         }
-        public async Task Register()
+        public async Task Register(object parameter)
         {
             _server = new ServerHttp();
             var result = await _server.Register(new NetUser() { Login = LoginText, Password = PasswordText});
@@ -51,7 +51,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
                         "Уведомление",
                         MessageBoxButton.OK,
                         MessageBoxImage.Information);
-                    Authorise();
+                    Authorise(parameter);
                     break;
                 case HttpStatusCode.BadRequest:
                     var error = await result.Content.ReadFromJsonAsync<ProblemDetails>(null, CancellationToken.None);
@@ -62,7 +62,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
                     break;
             }
         }
-        public async Task Authorise()
+        public async Task Authorise(object parameter)
         {
             _server = new ServerHttp();
             var result = await _server.Authorise(new NetUser() { Login = LoginText, Password = PasswordText});
@@ -77,6 +77,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
                     MainViewModel = new MainViewModel();
                     mv.DataContext = MainViewModel;
                     mv.Show();
+                    (parameter as Window).Close();
                     break;
                 case HttpStatusCode.BadRequest:
                     var error = await result.Content.ReadFromJsonAsync<ProblemDetails>(null, CancellationToken.None);

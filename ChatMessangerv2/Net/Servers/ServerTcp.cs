@@ -24,13 +24,14 @@ namespace ChatMessangerv2.Net
         public ServerTcp()
         {
             _tcpClient = new TcpClient();
-            //GetMessages();
+
         }
         public void ConnectToServer()
         {
             if (!_tcpClient.Connected)
             {
                 _tcpClient.Connect(_ip, _port);
+                //GetMessages();
             }
         }
         public void SendMessage(NetMessage message, ACTION act)
@@ -62,16 +63,14 @@ namespace ChatMessangerv2.Net
                     var msg = GetMessage();
                     switch (msg.action)
                     {
-                        case ACTION.SEND:
-                            break;
                         case ACTION.CHNG:
+                            msgDeleteEvent?.Invoke();
                             break;
                         case ACTION.DEL:
+                            msgUpdateEvent?.Invoke();
                             break;
                         case ACTION.GET:
                             msgRecievedEvent?.Invoke();
-                            break;
-                        default:
                             break;
                     }
                 }

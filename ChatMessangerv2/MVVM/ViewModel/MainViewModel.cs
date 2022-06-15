@@ -78,7 +78,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
         }
 
 
-        public async void GetChats()
+        public async Task GetChats()
         {
             _serverHttp = new ServerHttp();
             var result =  await _serverHttp.GetChats(0, 10);
@@ -142,6 +142,10 @@ namespace ChatMessangerv2.MVVM.ViewModel
         {
             _serverTcp.ConnectToServer();
             _serverTcp.SendMessage(Message, Net.Servers.MessageTransfer.ACTION.SEND);
+        }
+        public async Task DeleteChatToServer()
+        {
+
         }
     }
 }
