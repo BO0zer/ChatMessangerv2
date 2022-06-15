@@ -50,7 +50,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
         }
         public void Close(object paramater)
         {
-            (paramater as Window).Close();
+            (paramater as Window).DialogResult = true;
         }
     }
 }

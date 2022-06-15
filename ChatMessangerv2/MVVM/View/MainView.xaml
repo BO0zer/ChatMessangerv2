@@ -30,9 +30,12 @@
                 </i:Interaction.Triggers>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
+                        <DockPanel>
                             <TextBlock FontSize="16" Text="{Binding Path=UserContact.Login}" HorizontalAlignment="Center"/>
-                        </StackPanel>
+                            <Button Width="30"
+                                        Content="D"
+                                        Command="{Binding DeleteContact}"/>
+                        </DockPanel>
                     </DataTemplate>
  
                 </ListBox.ItemTemplate>
@@ -41,8 +44,8 @@
         <StackPanel Grid.Column="1">
             <Menu Height="25" VerticalAlignment="Top" HorizontalAlignment="Right">
                 <MenuItem Header="Профиль">
-                    <Button Content="Изменить логин"/>
-                    <Button Content="Изменить пароль"/>
+                    <Button Content="Изменить логин" Command="{Binding OpenChangeLoginDialog}"/>
+                    <Button Content="Изменить пароль" Command="{Binding OpenChangePasswordDialog}"/>
                     <Button Content="Выйти из аккаунта"/>
                 </MenuItem>
 
@@ -76,9 +79,11 @@
 
                 <Button Width="55"
                         Content="Send"
-                        Command="{Binding SendMessage}"/>
+                        Command="{Binding SendMessage}"
+                        HorizontalAlignment="Left"/>
                 <Button Width="55"
-                        Content="Attach"/>
+                        Content="Attach"
+                        HorizontalAlignment="Right"/>
             </StackPanel>
         </StackPanel>
     </Grid>

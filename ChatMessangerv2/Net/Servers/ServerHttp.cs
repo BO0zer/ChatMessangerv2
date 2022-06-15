@@ -62,10 +62,10 @@ namespace ChatMessangerv2.Net
             var url = $"User/{password}";
             return await _httpClient.PutAsJsonAsync(url, user);
         }
-        public async Task<HttpResponseMessage> NewLogin(NetUser user, string login)
+        public async Task<HttpResponseMessage> NewLogin(NetUser user)
         {
             _httpClient.DefaultRequestHeaders.Add("Token", StartViewModel.Token);
-            var url = $"User/{login}";
+            var url = $"User";
             return await _httpClient.PutAsJsonAsync(url, user);
         }
         public async Task<HttpResponseMessage> DeleteChat(Guid id)

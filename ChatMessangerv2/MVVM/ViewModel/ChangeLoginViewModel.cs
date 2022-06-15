@@ -31,13 +31,13 @@ namespace ChatMessangerv2.MVVM.ViewModel
         {
             _server = new ServerHttp();
             NetUser netUser = new NetUser() { Id = User.YouUser.Id, Login = NewLogin, Password = OldPassword };
-            var result = await _server.NewLogin(netUser, NewLogin);
+            var result = await _server.NewLogin(netUser);
             var status = result.StatusCode;
             switch (status)
             {
                 case HttpStatusCode.OK:
                     User.YouUser.Password = NewLogin;
-                    MessageBox.Show("Пароль успешно изменен");
+                    MessageBox.Show("Логин успешно изменен");
                     break;
                 case HttpStatusCode.BadRequest:
                     var error = await result.Content.ReadFromJsonAsync<ProblemDetails>(null, CancellationToken.None);
@@ -50,7 +50,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
         }
         public void Close(object paramater)
         {
-            (paramater as Window).Close();
+            (paramater as Window).DialogResult = true;
         }
     }
 }

@@ -34,6 +34,8 @@ namespace ChatMessangerv2.MVVM.ViewModel
         public RelayCommand EditPassword { get; set; }
         public RelayCommand EditLogin { get; set; }
         public RelayCommand GetMessagesForSelectedChat { get; set; }
+        public RelayCommand OpenChangeLoginDialog { get; set; }
+        public RelayCommand OpenChangePasswordDialog { get; set; }
 
         private ServerTcp _serverTcp;
         private ServerHttp _serverHttp;
@@ -49,6 +51,9 @@ namespace ChatMessangerv2.MVVM.ViewModel
 
             GetChats();
 
+            //DeleteContact = new RelayCommand();
+            OpenChangeLoginDialog = new RelayCommand(o => OpenChangeLogin());
+            OpenChangePasswordDialog = new RelayCommand(o => OpenChangePassword());
             GetMessagesForSelectedChat = new RelayCommand(o => GetMessages());
             AddContact = new RelayCommand(o => OpenAddContact());
             SendMessage = new RelayCommand(o => SendMessageToChat());
@@ -145,7 +150,19 @@ namespace ChatMessangerv2.MVVM.ViewModel
         }
         public async Task DeleteChatToServer()
         {
-
+            
+        }
+        public void OpenChangeLogin()
+        {
+            ChangeLogin cl = new ChangeLogin();
+            cl.DataContext = new ChangeLoginViewModel();
+            cl.ShowDialog();
+        }
+        public void OpenChangePassword()
+        {
+            ChangePassword cl = new ChangePassword();
+            cl.DataContext = new ChangePasswordViewModel();
+            cl.ShowDialog();
         }
     }
 }
