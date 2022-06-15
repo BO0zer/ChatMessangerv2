@@ -61,7 +61,7 @@ namespace ChatMessangerv2.Net
                 while (true)
                 {
                     var msg = GetMessage();
-                    switch (msg.action)
+                    switch (msg.Action)
                     {
                         case ACTION.CHNG:
                             msgDeleteEvent?.Invoke();
