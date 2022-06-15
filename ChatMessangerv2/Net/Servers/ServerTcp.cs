@@ -39,11 +39,11 @@ namespace ChatMessangerv2.Net
             var stream = _tcpClient.GetStream();
             TransferMessages transferMessages = new TransferMessages();
             transferMessages.SetToken(StartViewModel.Token);
-            transferMessages.action = act;
+            transferMessages.Action = act;
             transferMessages.Message = message;
+            transferMessages.ForAll = null;
             BinaryFormatter binf = new BinaryFormatter();
             binf.Serialize(stream, transferMessages);
-            stream.Close();
         }
         public TransferMessages GetMessage()
         {

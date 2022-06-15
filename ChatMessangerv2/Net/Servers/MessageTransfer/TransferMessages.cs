@@ -35,11 +35,11 @@ namespace ChatMessangerv2.Net.Servers.MessageTransfer
     [Serializable]
     public class TransferMessages : Transfer
     {
-        internal ACTION action;
-
         /// <summary>
         /// передаваемое сообщение
         /// </summary>
         public NetMessage Message { get; set; }
+
+        public bool? ForAll { get; set; }
     }
 }
