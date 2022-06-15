@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TransferLibrary;
 
 namespace ChatMessangerv2.Net.Servers.MessageTransfer
 {
@@ -21,14 +22,6 @@ namespace ChatMessangerv2.Net.Servers.MessageTransfer
     /// <summary>
     /// Вариации действий
     /// </summary>
-    [Serializable]
-    public enum ACTION
-    {
-        SEND,
-        CHNG,
-        DEL,
-        GET
-    }
     /// <summary>
     /// Json класс с сообщениями и амортизационными токенами
     /// </summary>

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ChatMessangerv2.MVVM.View"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="Привет" Height="475" Width="800">
+        Title="Привет" Height="495" Width="820">
     <!--DataContext="{Binding MainViewModel, Mode=OneWay, Source={StaticResource Locator}}">-->
     <Grid>
         <Grid.ColumnDefinitions>
@@ -31,10 +31,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <DockPanel>
-                            <TextBlock FontSize="16" Text="{Binding Path=UserContact.Login}" HorizontalAlignment="Center"/>
-                            <Button Width="30"
-                                        Content="D"
-                                        Command="{Binding DeleteContact}"/>
+                            <TextBlock Margin="10,0,0,0" FontSize="16" Text="{Binding Path=UserContact.Login}" HorizontalAlignment="Center"/>
                         </DockPanel>
                     </DataTemplate>
  
@@ -46,7 +43,7 @@
                 <MenuItem Header="Профиль">
                     <Button Content="Изменить логин" Command="{Binding OpenChangeLoginDialog}"/>
                     <Button Content="Изменить пароль" Command="{Binding OpenChangePasswordDialog}"/>
-                    <Button Content="Выйти из аккаунта"/>
+                    <Button Content="Выйти из аккаунта" Command="{Binding GetBack}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
                 </MenuItem>
 
             </Menu>
@@ -61,9 +58,6 @@
                                 <TextBlock FontSize="12" Text="{Binding Path=Text}" Width="250" Margin="10,0,0,0"/>
                                 <Button Width="30"
                                         Content="D"
-                                        Command="{Binding UpdateMessage}"/>
-                                <Button Width="30"
-                                        Content="U"
                                         Command="{Binding DeleteMessage}"/>
                             </DockPanel>
 

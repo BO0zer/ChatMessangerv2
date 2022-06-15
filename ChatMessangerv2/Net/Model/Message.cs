@@ -20,6 +20,7 @@ namespace ChatMessangerv2.Net.Model
         /// <summary>
         /// Просмотрено
         /// </summary>
+        public Guid ChatId { get; set; }
         public bool? IsViewed { get; set; }
         /// <summary>
         /// Текст сообщения

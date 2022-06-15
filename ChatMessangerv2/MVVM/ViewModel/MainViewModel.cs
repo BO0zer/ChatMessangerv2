@@ -15,6 +15,10 @@ using System.Windows;
 using System.Net;
 using System.Net.Http.Json;
 using System.Threading;
+using System.Net.Http;
+using static System.Net.Mime.MediaTypeNames;
+using Application = System.Windows.Application;
+using TransferLibrary;
 
 namespace ChatMessangerv2.MVVM.ViewModel
 {
@@ -36,6 +40,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
         public RelayCommand GetMessagesForSelectedChat { get; set; }
         public RelayCommand OpenChangeLoginDialog { get; set; }
         public RelayCommand OpenChangePasswordDialog { get; set; }
+        public RelayCommand GetBack { get; set; }
 
         private ServerTcp _serverTcp;
         private ServerHttp _serverHttp;
@@ -52,17 +57,15 @@ namespace ChatMessangerv2.MVVM.ViewModel
             GetChats();
 
             //DeleteContact = new RelayCommand();
+            GetBack = new RelayCommand(GetBackToStart);
             OpenChangeLoginDialog = new RelayCommand(o => OpenChangeLogin());
             OpenChangePasswordDialog = new RelayCommand(o => OpenChangePassword());
             GetMessagesForSelectedChat = new RelayCommand(o => GetMessages());
             AddContact = new RelayCommand(o => OpenAddContact());
             SendMessage = new RelayCommand(o => SendMessageToChat());
+            DeleteMessage = new RelayCommand(o => DeleteMsgToServer());
         }
 
-        private void MessageRecieved()
-        {
-            var msg = _serverTcp.GetMessage();
-        }
 
         public void OpenAddContact()
         {
@@ -73,6 +76,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
                 win = new AddContactView();
                 Chats.Add(new Chat()
                 {
+                    Id = Chat.CommonChat.Id,
                     CreationTimeLocal = Chat.CommonChat.CreationTimeLocal,
                     UserContact = Chat.CommonChat.UserContact,
                     UserMain = MyUser.YouUser
@@ -143,14 +147,38 @@ namespace ChatMessangerv2.MVVM.ViewModel
                 }
             }
         }
-        public void SendMessageToChat()
+        public async Task SendMessageToChat()
         {
+            //if (SelectedChat != null)
+            //{
+            //    var client = new HttpClient();
+            //    client.BaseAddress = new Uri("https://localhost:44359/api/");
+            //    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", StartViewModel.Token);
+            //    var newMessage = new NewMessageDetails()
+            //    {
+            //        Text = Message.Text,
+            //        ChatId = SelectedChat.Id
+            //    };
+            //    await client.PostAsJsonAsync("Messages", newMessage);
+        //}
             _serverTcp.ConnectToServer();
-            _serverTcp.SendMessage(Message, Net.Servers.MessageTransfer.ACTION.SEND);
+            Message.Sender = MyUser.YouUser;
+            Message.ChatId = SelectedChat.Id;
+            _serverTcp.SendMessage(Message, ACTION.SEND);
+            GetMessages();
+           // Messages.Add(Message);
         }
         public async Task DeleteChatToServer()
         {
-            
+
+        }
+        public async Task DeleteMsgToServer()
+        {
+            _serverTcp.ConnectToServer();
+            Message.Sender = MyUser.YouUser;
+            Message.ChatId = SelectedChat.Id;
+            _serverTcp.SendMessage(Message, ACTION.DEL);
+            GetMessages();
         }
         public void OpenChangeLogin()
         {
@@ -163,6 +191,19 @@ namespace ChatMessangerv2.MVVM.ViewModel
             ChangePassword cl = new ChangePassword();
             cl.DataContext = new ChangePasswordViewModel();
             cl.ShowDialog();
+        }
+        public void GetBackToStart(object parameter)
+        {
+            StartViewModel svm = new StartViewModel();
+            StartView sv = new StartView();
+            sv.DataContext = svm;
+            sv.Show();
+            (parameter as Window).Close();
+        }
+        public void MessageRecieved()
+        {
+            Messages.Add( _serverTcp.GetMessage().Message);
+            Application.Current.Dispatcher.Invoke(() => Messages.Add(_serverTcp.GetMessage().Message));
         }
     }
 }
