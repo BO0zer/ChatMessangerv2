@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ChatMessangerv2.Net.Model
 {
     [Serializable]
-    public class NetMessage
+    public class Message
     {
         /// <summary>
         /// ID сообщения
@@ -16,7 +16,7 @@ namespace ChatMessangerv2.Net.Model
         /// <summary>
         /// ID отправителя
         /// </summary>
-        public NetUser Sender { get; set; }
+        public User Sender { get; set; }
         /// <summary>
         /// Просмотрено
         /// </summary>

@@ -20,11 +20,11 @@ namespace ChatMessangerv2.MVVM.ViewModel
 {
     public class MainViewModel
     {
-        public NetMessage Message { get; set; }
+        public Message Message { get; set; }
 
         public ObservableCollection<Chat> Chats { get; set; }
         public Chat SelectedChat { get; set; }
-        public ObservableCollection<NetMessage> Messages { get; set; }
+        public ObservableCollection<Message> Messages { get; set; }
         public RelayCommand AddContact { get; set; }
         public RelayCommand SendMessage { get; set; }  
         public RelayCommand UpdateMessage { get; set; }
@@ -43,8 +43,8 @@ namespace ChatMessangerv2.MVVM.ViewModel
 
         public MainViewModel()
         {
-            Message = new NetMessage();
-            Messages = new ObservableCollection<NetMessage>();
+            Message = new Message();
+            Messages = new ObservableCollection<Message>();
             Chats = new ObservableCollection<Chat>();
             _serverTcp = new ServerTcp();
             //_serverTcp.msgRecievedEvent += MessageRecieved;
@@ -75,7 +75,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
                 {
                     CreationTimeLocal = Chat.CommonChat.CreationTimeLocal,
                     UserContact = Chat.CommonChat.UserContact,
-                    UserMain = User.YouUser
+                    UserMain = MyUser.YouUser
                 });
 
                 win.Close();
@@ -99,9 +99,9 @@ namespace ChatMessangerv2.MVVM.ViewModel
                         {
                             Id = cht.Id,
                             CreationTimeLocal = cht.CreationTimeLocal,
-                            UserMain = User.YouUser,
-                            UserContact = cht.ChatMembers.First(o=>o.Id != User.YouUser.Id),
-                            Messages = new ObservableCollection<NetMessage>()   
+                            UserMain = MyUser.YouUser,
+                            UserContact = cht.ChatMembers.First(o=>o.Id != MyUser.YouUser.Id),
+                            Messages = new ObservableCollection<Message>()   
                         };
                         Chats.Add(chat);
                     }
@@ -126,7 +126,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
                 switch (status)
                 {
                     case HttpStatusCode.OK:
-                        var messages = await result.Content.ReadFromJsonAsync<IEnumerable<NetMessage>>();
+                        var messages = await result.Content.ReadFromJsonAsync<IEnumerable<Message>>();
                         foreach (var msg in messages)
                         {
                             Messages.Add(msg);

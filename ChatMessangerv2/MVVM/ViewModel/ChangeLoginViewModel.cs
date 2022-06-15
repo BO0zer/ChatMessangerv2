@@ -30,13 +30,13 @@ namespace ChatMessangerv2.MVVM.ViewModel
         public async Task ChangeLoginToServer()
         {
             _server = new ServerHttp();
-            NetUser netUser = new NetUser() { Id = User.YouUser.Id, Login = NewLogin, Password = OldPassword };
+            User netUser = new User() { Id = MyUser.YouUser.Id, Login = NewLogin, Password = OldPassword };
             var result = await _server.NewLogin(netUser);
             var status = result.StatusCode;
             switch (status)
             {
                 case HttpStatusCode.OK:
-                    User.YouUser.Password = NewLogin;
+                    MyUser.YouUser.Password = NewLogin;
                     MessageBox.Show("Логин успешно изменен");
                     break;
                 case HttpStatusCode.BadRequest:

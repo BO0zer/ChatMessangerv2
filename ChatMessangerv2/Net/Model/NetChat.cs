@@ -19,6 +19,6 @@ namespace ChatMessangerv2.Net.Model
         /// <summary>
         /// Участники чата
         /// </summary>
-        public IEnumerable<NetUser> ChatMembers { get; set; }
+        public IEnumerable<User> ChatMembers { get; set; }
     }
 }

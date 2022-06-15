@@ -21,12 +21,12 @@ namespace ChatMessangerv2.Net
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = uri;
         }
-        public async Task<HttpResponseMessage> Register(NetUser user)
+        public async Task<HttpResponseMessage> Register(User user)
         {
             string url = $"User/{user.Login}/{user.Password}"; ;
             return await _httpClient.PostAsync(url, null);
         }
-        public async Task<HttpResponseMessage> Authorise(NetUser user)
+        public async Task<HttpResponseMessage> Authorise(User user)
         {
             string url = $"User/{user.Login}/{user.Password}";
             return await _httpClient.GetAsync(url);
@@ -56,13 +56,13 @@ namespace ChatMessangerv2.Net
             var url = $"Chat";
             return await _httpClient.PutAsJsonAsync(url, chat);
         }
-        public async Task<HttpResponseMessage> NewPassword(NetUser user, string password)
+        public async Task<HttpResponseMessage> NewPassword(User user, string password)
         {
             _httpClient.DefaultRequestHeaders.Add("Token", StartViewModel.Token);
             var url = $"User/{password}";
             return await _httpClient.PutAsJsonAsync(url, user);
         }
-        public async Task<HttpResponseMessage> NewLogin(NetUser user)
+        public async Task<HttpResponseMessage> NewLogin(User user)
         {
             _httpClient.DefaultRequestHeaders.Add("Token", StartViewModel.Token);
             var url = $"User";

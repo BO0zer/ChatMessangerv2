@@ -22,8 +22,8 @@ namespace ChatMessangerv2.MVVM.ViewModel
     public class AddContactViewModel: OnPropertyChangedClass
     {
 
-        private NetUser _selectedUser;
-        public NetUser SelectedUser 
+        private User _selectedUser;
+        public User SelectedUser 
         {
             get
             {
@@ -44,7 +44,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
         public RelayCommand SearchUserToServer { get; set; }
         public RelayCommand ClickExite { get; set; }
         public RelayCommand Load { get; set; }
-        public ObservableCollection<NetUser> Users { get; set; }
+        public ObservableCollection<User> Users { get; set; }
 
         private ServerHttp _server;
         public AddContactViewModel()
@@ -53,7 +53,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
             //chat.ValueChanged += ModelValueChanged;
             //chat.AllValueChanged();
             //UserMain = userMain;
-            Users = new ObservableCollection<NetUser>();
+            Users = new ObservableCollection<User>();
             AddContactToContacts = new RelayCommand( o=> AddContact(o));
             SearchUserToServer = new RelayCommand(o => SearchUser());
             Load = new RelayCommand(o => LoadMore());
@@ -78,8 +78,8 @@ namespace ChatMessangerv2.MVVM.ViewModel
             switch(status)
             {
                 case HttpStatusCode.OK:
-                    var users = await result.Content.ReadFromJsonAsync<IEnumerable<NetUser>>(null, CancellationToken.None);
-                    List<NetUser> listUsers = users.ToList();
+                    var users = await result.Content.ReadFromJsonAsync<IEnumerable<User>>(null, CancellationToken.None);
+                    List<User> listUsers = users.ToList();
                     for (int i = 0; i < listUsers.Count; i++)
                         Users.Add(listUsers[i]);
                     break;
@@ -106,7 +106,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
         public async Task AddChat()
         {
             _server = new ServerHttp();
-            var result = await _server.CreateChat(new NetChat() { CreationTimeLocal = DateTime.Now,  ChatMembers = new List<NetUser>() 
+            var result = await _server.CreateChat(new NetChat() { CreationTimeLocal = DateTime.Now,  ChatMembers = new List<User>() 
             {
                 SelectedUser
             } });
@@ -115,7 +115,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
             {
                 case HttpStatusCode.OK:
                     var chat = await result.Content.ReadFromJsonAsync<NetChat>(null, CancellationToken.None);
-                    Chat.CommonChat = new Chat() { CreationTimeLocal = DateTime.Now, UserContact = SelectedUser, Id = chat.Id, UserMain = User.YouUser };
+                    Chat.CommonChat = new Chat() { CreationTimeLocal = DateTime.Now, UserContact = SelectedUser, Id = chat.Id, UserMain = MyUser.YouUser };
                     break;
                 case HttpStatusCode.BadRequest:
                     var error =  await result.Content.ReadFromJsonAsync<ProblemDetails>(null, CancellationToken.None);

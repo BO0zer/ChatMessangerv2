@@ -1,18 +1,14 @@
-﻿using System;
+﻿using ChatMessangerv2.Net.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChatMessangerv2.Net.Model
+namespace ChatMessangerv2.MVVM.Model
 {
-    [Serializable]
-    public class NetUser
+    public class MyUser
     {
-        /// <summary>
-        /// ID пользователя
-        /// </summary>
-        public Guid Id { get; set; }
         /// <summary>
         /// Логин пользователя
         /// </summary>
@@ -21,5 +17,6 @@ namespace ChatMessangerv2.Net.Model
         /// Пароль пользователя
         /// </summary>
         public string Password { get; set; }
+        public static User YouUser { get; set; }
     }
 }

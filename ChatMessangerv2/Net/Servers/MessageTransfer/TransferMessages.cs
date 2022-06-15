@@ -38,7 +38,7 @@ namespace ChatMessangerv2.Net.Servers.MessageTransfer
         /// <summary>
         /// передаваемое сообщение
         /// </summary>
-        public NetMessage Message { get; set; }
+        public Message Message { get; set; }
 
         public bool? ForAll { get; set; }
     }

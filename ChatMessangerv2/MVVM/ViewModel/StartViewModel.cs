@@ -42,7 +42,7 @@ namespace ChatMessangerv2.MVVM.ViewModel
         public async Task Register(object parameter)
         {
             _server = new ServerHttp();
-            var result = await _server.Register(new NetUser() { Login = LoginText, Password = PasswordText});
+            var result = await _server.Register(new User() { Login = LoginText, Password = PasswordText});
             var status = result.StatusCode;
             switch(status)
             {
@@ -65,15 +65,15 @@ namespace ChatMessangerv2.MVVM.ViewModel
         public async Task Authorise(object parameter)
         {
             _server = new ServerHttp();
-            var result = await _server.Authorise(new NetUser() { Login = LoginText, Password = PasswordText});
+            var result = await _server.Authorise(new User() { Login = LoginText, Password = PasswordText});
             var status = result.StatusCode;
             switch (status)
             {
                 case HttpStatusCode.OK:
                     Token = result.Headers.GetValues("Token").First();
                     MainView mv = new MainView();
-                    var user = await result.Content.ReadFromJsonAsync<NetUser>(null, CancellationToken.None);
-                    User.YouUser = user;
+                    var user = await result.Content.ReadFromJsonAsync<User>(null, CancellationToken.None);
+                    MyUser.YouUser = user;
                     MainViewModel = new MainViewModel();
                     mv.DataContext = MainViewModel;
                     mv.Show();

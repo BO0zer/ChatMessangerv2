@@ -34,7 +34,7 @@ namespace ChatMessangerv2.Net
                 //GetMessages();
             }
         }
-        public void SendMessage(NetMessage message, ACTION act)
+        public void SendMessage(Message message, ACTION act)
         {
             var stream = _tcpClient.GetStream();
             TransferMessages transferMessages = new TransferMessages();
